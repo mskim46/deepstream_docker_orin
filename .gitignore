@@ -1,9 +1,9 @@
-   # Ignore docker files
-   docker/LicenseAgreement.pdf
-   docker/LicenseAgreementContainer.pdf
-   docker/deepstream_sdk_v7.1.0_jetson.tbz2
-   docker/install_extra_libs.sh
-   docker/rsyslog
-   docker/user_additional_install_devel.sh
-   docker/user_additional_install_runtime.sh
-   docker/user_deepstream_python_apps_install.sh
+# Ignore docker files
+docker/LicenseAgreement.pdf
+docker/LicenseAgreementContainer.pdf
+docker/deepstream_sdk_v7.1.0_jetson.tbz2
+docker/install_extra_libs.sh
+docker/rsyslog
+docker/user_additional_install_devel.sh
+docker/user_additional_install_runtime.sh
+docker/user_deepstream_python_apps_install.sh

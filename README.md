@@ -1,13 +1,36 @@
 ```
-docker run -it -d --name arion_orin_dev_container --runtime=nvidia deepstream-l4t:7.1.0-triton-local bash
+#check jtop group id
+#https://rnext.it/jetson_stats/docker.html
+getent group jtop | awk -F: '{print $3}'
+
+#run container
+#group id 1001 is jtop and -v /run/jtop.sock:/run/jtop.sock is for jtop
+#jtop must be installed on both the host system and within the Docker image.
+docker run --rm -it -d --group-add 1001 -v /run/jtop.sock:/run/jtop.sock -u rgblab --runtime=nvidia deepstream-l4t:7.1.0-triton-local bash
 docker exec -it arion_orin_dev_container bash
-docker cp /home/rgblab/.ssh arion_orin_dev_container:/home/
 
-chmod 600 /home/.ssh/id_ed25519
-chmod 644 /home/.ssh/id_ed25519.pub
+#copy ssh key to container at system cmd
+docker exec -u root 93e9610d67f3 mkdir -p /home/rgblab/.ssh
+docker exec -u root arion_orin_dev_container chown rgblab:rgblab /home/rgblab/.ssh
+docker exec -u root arion_orin_dev_container chmod 700 /home/rgblab/.ssh
 
+# Now copy the individual key files *directly* into the .ssh directory
+docker cp ~/.ssh/id_ed25519 93e9610d67f3:/home/rgblab/.ssh/id_ed25519
+docker cp ~/.ssh/id_ed25519.pub 93e9610d67f3:/home/rgblab/.ssh/id_ed25519.pub
+
+sudo chown rgblab:rgblab /home/rgblab/.ssh/id_ed25519
+sudo chown rgblab:rgblab /home/rgblab/.ssh/id_ed25519.pub
+sudo chown rgblab:rgblab /home/rgblab/.ssh
+
+# Inside the container (as rgblab):  No need for chmod here, permissions are set correctly on copy
+docker exec -it -u rgblab arion_orin_dev_container bash
+# Now you can proceed with ssh-add and testing
 eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
 ssh -T git@github.com
+
+
+git clone git@github.com:rgblab-arion/imc_orin.git
 ```
 # DeepStream 7.1 Open Source Dockerfiles Guide
 

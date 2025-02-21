@@ -163,7 +163,13 @@ RUN rm -f /usr/lib/aarch64-linux-gnu/gstreamer-1.0/libgstuvch264.so /usr/lib/aar
 RUN apt-get update && apt install -y sudo iputils-ping
  
 # Install Jeston-stat
-RUN sudo pip3 install jetson-stats
+RUN sudo pip3 install -U jetson-stats
+
+# Create the [rgblab] user, set the shell to bash, adn add to sudo group
+RUN useradd -m -s /bin/bash rgblab && \
+        usermod -aG sudo rgblab
+
+RUN echo "rgblab:rgblab" | chpasswd
 
 # Install dependencies for IMC
 RUN set -e
@@ -220,4 +226,3 @@ ENV PATH /opt/proto/bin:$PATH
 
 # Clean up link to internal repo
 RUN sed -i '$d' /etc/apt/sources.list ; rm -f /etc/apt/sources.list.d/cuda.list
-

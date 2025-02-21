@@ -180,6 +180,12 @@ RUN rm -f libssl1.1_1.1.1f-1ubuntu2_arm64.deb libssl-dev_1.1.1f-1ubuntu2_arm64.d
 # Install prerequisites for AWS SDK for C++ without reinstalling OpenSSL-related packages.
 RUN apt-get install -y libcurl4-openssl-dev uuid-dev zlib1g-dev libpulse-dev
 
+# Install Bazelisk (Bazel build system)
+RUN mkdir -p /usr/local/bin && \
+        wget https://github.com/bazelbuild/bazelisk/releases/download/v1.25.0/bazelisk-linux-arm64 -O /usr/local/bin/bazel && \
+        chmod +x /usr/local/bin/bazel
+
+
 # Build AWS SDK for C++ (DynamoDB only) from source.
 WORKDIR /tmp
 RUN apt-get install -y cmake 

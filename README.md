@@ -2,6 +2,12 @@
 docker run -it -d --name arion_orin_dev_container --runtime=nvidia deepstream-l4t:7.1.0-triton-local bash
 docker exec -it arion_orin_dev_container bash
 docker cp /home/rgblab/.ssh arion_orin_dev_container:/home/
+
+chmod 600 /home/.ssh/id_ed25519
+chmod 644 /home/.ssh/id_ed25519.pub
+
+eval "$(ssh-agent -s)"
+ssh -T git@github.com
 ```
 # DeepStream 7.1 Open Source Dockerfiles Guide
 

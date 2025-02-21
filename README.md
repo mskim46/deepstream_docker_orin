@@ -1,3 +1,8 @@
+```
+docker run -it -d --name arion_orin_dev_container --runtime=nvidia deepstream-l4t:7.1.0-triton-local bash
+docker exec -it arion_orin_dev_container bash
+docker cp /home/rgblab/.ssh arion_orin_dev_container:/home/
+```
 # DeepStream 7.1 Open Source Dockerfiles Guide
 
 The documentation here is intended to help customers build the Open Source DeepStream Dockerfiles.

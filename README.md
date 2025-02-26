@@ -1,4 +1,30 @@
 ```
+#Install docker and nvidia container toolkit
+#https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html
+sudo usermod -aG docker $USER
+#update groups
+#reboot is required. but instantly after login, it will be updated.
+newgrp docker
+#or
+sudo reboot
+
+#install nvidia container toolkit
+#https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html
+#add nvidia container toolkit key
+curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
+#add nvidia container toolkit list
+curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
+sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+#install nvidia container toolkit
+sudo apt-get update
+sudo apt-get install -y nvidia-container-toolkit
+#configure nvidia container toolkit
+sudo nvidia-ctk runtime configure --runtime=docker
+sudo systemctl restart docker
+
+
+
 #check jtop group id
 #https://rnext.it/jetson_stats/docker.html
 getent group jtop | awk -F: '{print $3}'

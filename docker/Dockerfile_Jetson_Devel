@@ -207,11 +207,11 @@ RUN git clone --depth 1 --recurse-submodules https://github.com/aws/aws-sdk-cpp.
 WORKDIR ${DS_DIR}
 
 # Install MAVLink into /opt/mavlink and then remove the git clone.
-RUN git clone --depth 1 --recursive https://github.com/mavlink/mavlink.git /tmp/mavlink && \
-    mkdir -p /tmp/mavlink/build && cd /tmp/mavlink/build && \
-    cmake -DCMAKE_INSTALL_PREFIX=/opt/mavlink -DMAVLINK_DIALECT=common -DMAVLINK_VERSION=2.0 .. && \
-    cmake --build . --target install && \
-    rm -rf /tmp/mavlink
+#RUN git clone --depth 1 --recursive https://github.com/mavlink/mavlink.git /tmp/mavlink && \
+#    mkdir -p /tmp/mavlink/build && cd /tmp/mavlink/build && \
+#    cmake -DCMAKE_INSTALL_PREFIX=/opt/mavlink -DMAVLINK_DIALECT=common -DMAVLINK_VERSION=2.0 .. && \
+#    cmake --build . --target install && \
+#   rm -rf /tmp/mavlink
 
 ############################################################################
 
